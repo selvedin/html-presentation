@@ -6,7 +6,7 @@ import { useHistory } from 'react-router'
 
 const CommandsToolbar = props => {
   const history = useHistory()
-  const [presents, setPresents] = useContext(AppContext)
+  const { presents, setPresents } = useContext(AppContext)
   const { data } = props
 
   const saveData = () => {

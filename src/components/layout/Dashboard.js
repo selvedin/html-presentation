@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import { AppContext } from 'data/AppContext'
 
 const Dashboard = () => {
-  const [presents] = useContext(AppContext)
+  const { presents } = useContext(AppContext)
 
   return (
     <div>
