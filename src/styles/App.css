@@ -1,0 +1,20 @@
+html, body, .App{
+  margin:0;
+  padding:0;
+}
+
+.App, .appGrid{
+  height: 100vh;
+}
+
+.largeButton{
+   width: calc(100vw/10);
+   height: calc(100vw/10);
+}
+
+.toolbarDiv{
+  display: inline-block;
+  padding-right:5px;
+  margin-right:5px;
+  border-right:1px solid white;
+}
