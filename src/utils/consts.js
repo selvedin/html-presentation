@@ -1,0 +1,2 @@
+export const COLORS = ['red', 'darkred', 'lightblue', 'blue', 'darkblue', 'lightgreen', 'green', 'darkgreen', 'orange', 'cyan', 'magenta', 'yellow', 'black', 'white']
+export const THICKS = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]

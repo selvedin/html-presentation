@@ -4,7 +4,7 @@ import Dashboard from 'components/layout/Dashboard'
 import Presentation from 'components/settings/Presentation';
 import { AppProvider } from 'data/AppContext';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import BoardComponent from 'components/tools/BoardComponent';
+import BoardComponent from 'components/tools/board/BoardComponent';
 
 function App() {
   return (

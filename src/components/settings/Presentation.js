@@ -5,7 +5,7 @@ import uuid from 'react-uuid'
 import CommandsToolbar from 'components/common/CommandsToolbar';
 
 const Presentation = (props) => {
-  const [presents] = useContext(AppContext)
+  const { presents } = useContext(AppContext)
   let present = { id: uuid(), title: 'Edit title', slides: [] }
   const [presentation, setPresentation] = useState(present)
 
