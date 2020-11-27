@@ -1,5 +1,5 @@
 import React, { Fragment, useRef, useState, useEffect, useContext } from 'react'
-import { BoardContext } from './BoardContext'
+import { BoardContext } from 'data/BoardContext'
 
 const CanvasComponent = () => {
   const { setMainContext, isErasing } = useContext(BoardContext)

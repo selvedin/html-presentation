@@ -1,7 +1,7 @@
 import { AppBar, Grid, Icon, IconButton, Toolbar, Typography } from '@material-ui/core';
 import React, { Fragment, useContext, useState } from 'react'
 import { useHistory } from 'react-router'
-import { BoardContext } from './BoardContext';
+import { BoardContext } from 'data/BoardContext';
 import swal from 'sweetalert'
 import { AppContext } from 'data/AppContext';
 import ColorMenu from './menus/ColorMenu';
@@ -17,8 +17,8 @@ const BoardAppBar = () => {
   const clearBoard = (dontAsk = true) => {
     if (dontAsk) {
       swal({
-        title: "Are you sure?",
-        text: "Once deleted, you will not be able to recover drawing!",
+        title: "Da li ste sigurni?",
+        text: "Podatci će bit nepovratno izbrisani!",
         icon: "warning",
         buttons: true,
         dangerMode: true,

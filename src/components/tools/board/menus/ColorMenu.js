@@ -2,7 +2,7 @@ import { Icon, IconButton, Menu, MenuItem } from '@material-ui/core'
 import React, { Fragment, useContext, useEffect, useState } from 'react'
 import uuid from 'react-uuid'
 import { COLORS } from 'utils/consts'
-import { BoardContext } from '../BoardContext'
+import { BoardContext } from '../../../../data/BoardContext'
 
 const ColorMenu = (props) => {
   const { menuAnchor, setMenuAnchor, mainContext, isBrushColor } = useContext(BoardContext)
