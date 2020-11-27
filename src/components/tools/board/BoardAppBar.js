@@ -6,6 +6,7 @@ import swal from 'sweetalert'
 import { AppContext } from 'data/AppContext';
 import ColorMenu from './menus/ColorMenu';
 import ThicknesMenu from './menus/ThicknesMenu';
+import { calculateImageSize } from 'utils/utils'
 
 const BoardAppBar = () => {
   const { mainContext, isErasing, setIsErasing, setIsBrushColor, setMenuAnchor, setThickAnchor } = useContext(BoardContext)
@@ -13,19 +14,25 @@ const BoardAppBar = () => {
   const [isFullScreen, setIsFullScreen] = useState(false)
   const history = useHistory()
 
-  const clearBoard = () => {
-    swal({
-      title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover drawing!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    })
-      .then((willDelete) => {
-        if (willDelete) {
-          mainContext.current.clearRect(0, 0, mainContext.current.canvas.width, mainContext.current.canvas.height)
-        }
+  const clearBoard = (dontAsk = true) => {
+    if (dontAsk) {
+      swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover drawing!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
       })
+        .then((willDelete) => {
+          if (willDelete) {
+            mainContext.current.clearRect(0, 0, mainContext.current.canvas.width, mainContext.current.canvas.height)
+          }
+        })
+    }
+    else {
+      mainContext.current.clearRect(0, 0, mainContext.current.canvas.width, mainContext.current.canvas.height)
+    }
+
   }
 
   const handleEraser = () => {
@@ -44,6 +51,30 @@ const BoardAppBar = () => {
 
   }
 
+  const loadImage = (e) => {
+    let file = {}
+    if (e.currentTarget.files.length) {
+      file = e.currentTarget.files[0]
+      var reader = new FileReader();
+      reader.readAsDataURL(file)
+      reader.onloadend = function (e) {
+        var backImage = new Image()
+        backImage.src = reader.result
+        backImage.onload = function () {
+          const dimensions = calculateImageSize(backImage.width, backImage.height, window.innerWidth, window.innerHeight)
+          console.log(window.innerWidth, window.innerHeight)
+          console.log(dimensions)
+          clearBoard(false)
+          mainContext.current.drawImage(backImage, ...dimensions)
+          // mainContext.current.font = "30px Comic Sans MS"
+          // mainContext.current.fillStyle = "yellow"
+          // mainContext.current.fillText(JSON.stringify(dimensions), 50, 50)
+          // mainContext.current.fillText(JSON.stringify([backImage.width, backImage.height]), 50, 100)
+        }
+      }
+    }
+  }
+
   return (
     <Fragment>
       <AppBar position="static">
@@ -60,6 +91,24 @@ const BoardAppBar = () => {
             </Grid>
 
             <Grid item>
+
+              <IconButton
+                variant="contained"
+                component="label"
+                color="inherit"
+                aria-label="load image"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                title="Load Image"
+              >
+                <Icon style={{ fontSize: '20px' }}>image</Icon>
+                <input
+                  type="file"
+                  onChange={loadImage}
+                  hidden
+                />
+              </IconButton>
+
               <IconButton
                 color="inherit"
                 aria-label="borad color"
@@ -70,6 +119,7 @@ const BoardAppBar = () => {
               >
                 <Icon style={{ fontSize: '20px' }}>tv</Icon>
               </IconButton>
+
               <IconButton
                 color="inherit"
                 aria-label="borad color"
