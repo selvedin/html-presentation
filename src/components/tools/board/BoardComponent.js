@@ -1,5 +1,5 @@
 import React, { Fragment, useContext, useEffect } from 'react'
-import { BoardProvider } from 'components/tools/board/BoardContext'
+import { BoardProvider } from 'data/BoardContext'
 import CanvasComponent from './CanvasComponent'
 import BoardAppBar from './BoardAppBar'
 import { FullScreen, useFullScreenHandle } from "react-full-screen"
