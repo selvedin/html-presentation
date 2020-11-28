@@ -3,19 +3,13 @@ import { AppBar, Grid, Icon, IconButton, Toolbar, Typography } from '@material-u
 import React, { useContext } from 'react'
 import { AppContext } from 'data/AppContext'
 import { useHistory } from 'react-router'
+import { SAVE_PRESENTATION } from 'utils/presentationConsts'
 
 const CommandsToolbar = props => {
   const history = useHistory()
-  const { presents, setPresents } = useContext(AppContext)
-  const { data } = props
+  const { dispatchPresentation } = useContext(AppContext)
+  const { presentation } = props
 
-  const saveData = () => {
-    const index = presents.findIndex(pr => pr.id === data.id)
-    if (index >= 0)
-      presents[index] = data
-    else
-      setPresents(prevData => [...prevData, data])
-  }
   const undoData = () => {
     console.log('undo')
   }
@@ -23,7 +17,7 @@ const CommandsToolbar = props => {
     console.log('redo')
   }
   const runPresentation = () => {
-    console.log(presents)
+    console.log('running presentation')
   }
   const goHome = () => {
     history.push("/")
@@ -42,7 +36,7 @@ const CommandsToolbar = props => {
         >
           <Grid item>
             <Typography variant="h6" color="inherit">
-              {props.appTitle}
+              {presentation.title}
             </Typography>
           </Grid>
 
@@ -82,7 +76,7 @@ const CommandsToolbar = props => {
                 aria-label="save presentation settings"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
-                onClick={saveData}
+                onClick={() => dispatchPresentation({ type: SAVE_PRESENTATION, payload: presentation })}
                 color="inherit"
                 title="Save"
               >

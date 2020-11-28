@@ -1,35 +1,35 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { AppContext } from 'data/AppContext'
 import { JsonEditor as Editor } from 'jsoneditor-react';
 import uuid from 'react-uuid'
+
 import CommandsToolbar from 'components/common/CommandsToolbar';
 
+
 const PresentationCreate = (props) => {
-  const { presents } = useContext(AppContext)
-  let present = { id: uuid(), title: 'Edit title', slides: [] }
-  const [presentation, setPresentation] = useState(present)
-
-  const { id } = props.match.params
-  if (id) {
-    const existing = presents.find(pr => id === pr.id)
-    if (existing) {
-      present = { ...existing }
-    }
+  const { presentations } = useContext(AppContext)
+  let { id } = props.match.params
+  const defaultPresentation = {
+    id: uuid(), title: 'Default Title', slides:
+      [
+        {
+          items:
+            [
+              { type: 'text', value: 'Ovo je prvi item', loadTime: 0 }
+            ]
+        }
+      ]
   }
-  useEffect(() => {
-    setPresentation(present)
-  }, [])
+  const existing = presentations.filter(pr => pr.id === id)
+  const [presentation, setPresentation] = useState(id && existing.length ? existing[0] : defaultPresentation)
 
-  const handleChange = (json) => {
-    setPresentation({ ...json })
-  }
 
   return (
     <div style={{ width: '80vw', height: '80vh' }}>
-      <CommandsToolbar appTitle={present.title} data={presentation} />
+      <CommandsToolbar presentation={presentation} />
       <Editor
-        value={present}
-        onChange={json => handleChange(json)}
+        value={presentation}
+        onChange={json => setPresentation(json)}
       />
     </div>
   )
