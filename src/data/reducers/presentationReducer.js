@@ -3,7 +3,7 @@ import {
   RUN_PRESENTATION, CLOSE_PRESENTATION, UNDO_ADDING_ITEM, REDO_ADDING_ITEM
 } from 'utils/presentationConsts'
 
-import { saveData } from 'utils/utils'
+import { saveData, showToast } from 'utils/utils'
 
 export const presentationReducer = (state, action) => {
   switch (action.type) {
@@ -11,6 +11,7 @@ export const presentationReducer = (state, action) => {
       {
         const existing = state.filter(pr => pr.id !== action.payload.id)
         const newData = [...existing, action.payload]
+        showToast("Data succesufully saved", "success", 1000)
         saveData('presentations', newData)
         return newData
       }

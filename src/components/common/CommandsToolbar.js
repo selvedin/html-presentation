@@ -2,7 +2,7 @@
 import { AppBar, Grid, Icon, IconButton, Toolbar, Typography } from '@material-ui/core'
 import React, { useContext } from 'react'
 import { AppContext } from 'data/AppContext'
-import { useHistory } from 'react-router'
+import { Redirect, useHistory } from 'react-router'
 import { SAVE_PRESENTATION } from 'utils/presentationConsts'
 
 const CommandsToolbar = props => {
@@ -18,6 +18,7 @@ const CommandsToolbar = props => {
   }
   const runPresentation = () => {
     console.log('running presentation')
+    history.push(`/run/${presentation.id}`)
   }
   const goHome = () => {
     history.push("/")

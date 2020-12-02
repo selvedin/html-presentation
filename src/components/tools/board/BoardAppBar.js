@@ -66,10 +66,6 @@ const BoardAppBar = () => {
           console.log(dimensions)
           clearBoard(false)
           mainContext.current.drawImage(backImage, ...dimensions)
-          // mainContext.current.font = "30px Comic Sans MS"
-          // mainContext.current.fillStyle = "yellow"
-          // mainContext.current.fillText(JSON.stringify(dimensions), 50, 50)
-          // mainContext.current.fillText(JSON.stringify([backImage.width, backImage.height]), 50, 100)
         }
       }
     }
