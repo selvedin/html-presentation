@@ -64,9 +64,9 @@ const PresentationRun = (props) => {
 
         <Typography align="center">
 
-          <Typography variant="h1">{presentation.Title}</Typography>
-          <Typography variant="h3">{presentation.Subject}</Typography>
-          <Typography variant="h5">{presentation.Author}</Typography>
+          <Typography variant="h1">{presentation.title}</Typography>
+          <Typography variant="h3">{presentation.subject}</Typography>
+          <Typography variant="h5">{presentation.author}</Typography>
 
         </Typography>
 
