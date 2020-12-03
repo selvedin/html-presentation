@@ -24,12 +24,10 @@ const CanvasComponent = () => {
   }, [])
 
   useEffect(() => {
-    contextRef.current.globalCompositeOperation = 'source-over';
-    contextRef.current.lineWidth = 5
+    contextRef.current.globalCompositeOperation = 'source-over'
     canvasRef.current.style.cursor = "crosshair"
     if (isErasing) {
-      contextRef.current.globalCompositeOperation = 'destination-out';
-      contextRef.current.lineWidth = 20
+      contextRef.current.globalCompositeOperation = 'destination-out'
       canvasRef.current.style.cursor = "not-allowed"
     }
   }, [isErasing])
@@ -58,11 +56,11 @@ const CanvasComponent = () => {
   return (
     <Fragment>
       <canvas
+        className="canvas frontCanvas"
         onMouseDown={startDrawing}
         onMouseUp={finishDrawing}
         onMouseMove={draw}
         ref={canvasRef}
-        style={{ border: "1px solid gray", backgroundColor: "#006a4e" }}
       />
     </Fragment>
   )

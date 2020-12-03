@@ -4,6 +4,7 @@ export const BoardContext = React.createContext()
 
 export const BoardProvider = props => {
   const [mainContext, setMainContext] = useState(null)
+  const [backContext, setBackContext] = useState(null)
   const [fullScreen, setFullScreen] = useState(null)
   const [isErasing, setIsErasing] = useState(false)
   const [isBrushColor, setIsBrushColor] = useState(false)
@@ -14,6 +15,7 @@ export const BoardProvider = props => {
     <BoardContext.Provider
       value={{
         mainContext, setMainContext,
+        backContext, setBackContext,
         isErasing, setIsErasing,
         fullScreen, setFullScreen,
         menuAnchor, setMenuAnchor,

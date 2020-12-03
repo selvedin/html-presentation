@@ -18,3 +18,24 @@ html, body, .App{
   margin-right:5px;
   border-right:1px solid white;
 }
+
+
+.runPresentation {
+  width: 100vw;
+  height: 100vh;
+  background: #FFF;
+}
+
+.canvas{
+  position: fixed;
+  margin:0;
+  top:50px;
+  left:0;
+  padding:0;
+  width:100%;
+  height:calc(100% - 50px);
+}
+
+.backCanvas{
+  background-color: #006a4e;
+}

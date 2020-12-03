@@ -1,3 +1,5 @@
+import { toast } from "react-toastify"
+
 export const calculateImageSize = (imgWidth, imgHeight, windowWidth, windowHeight) => {
   const diffWidth = windowWidth - imgWidth
   const diffHeight = windowHeight - imgHeight
@@ -37,4 +39,59 @@ export const getData = (key) => {
   if (data)
     return JSON.parse(data)
   else return []
+}
+
+export const openFullscreen = () => {
+  const elem = document.documentElement
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) { /* Safari */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE11 */
+    elem.msRequestFullscreen();
+  }
+}
+
+/* Close fullscreen */
+export const closeFullscreen = () => {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) { /* Safari */
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) { /* IE11 */
+    document.msExitFullscreen();
+  }
+}
+
+export const showToast = (message, type = "info", duration = 1000) => {
+  console.log(message)
+  toast.configure({
+    position: "top-center",
+    autoClose: duration,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined
+  })
+  switch (type) {
+    case "info":
+      toast.info(message)
+      break
+    case "success":
+      toast.success(message)
+      break
+    case "warning":
+      toast.warning(message)
+      break
+    case "error":
+      toast.error(message)
+      break
+    case "dark":
+      toast.dark(message)
+      break
+    default:
+      toast(message)
+
+  }
 }
