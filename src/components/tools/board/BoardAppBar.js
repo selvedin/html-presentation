@@ -3,18 +3,16 @@ import React, { Fragment, useContext, useState } from 'react'
 import { useHistory } from 'react-router'
 import { BoardContext } from 'data/BoardContext';
 import swal from 'sweetalert'
-import { AppContext } from 'data/AppContext';
 import ColorMenu from './menus/ColorMenu';
 import ThicknesMenu from './menus/ThicknesMenu';
-import { calculateImageSize } from 'utils/utils'
+import { calculateImageSize, openFullscreen, closeFullscreen } from 'utils/utils'
 
 const BoardAppBar = () => {
-  const { mainContext, isErasing, setIsErasing, setIsBrushColor, setMenuAnchor, setThickAnchor } = useContext(BoardContext)
-  const { fullScreen } = useContext(AppContext)
-  const [isFullScreen, setIsFullScreen] = useState(false)
+  const { mainContext, backContext, isErasing, setIsErasing, setIsBrushColor, setMenuAnchor, setThickAnchor } = useContext(BoardContext)
   const history = useHistory()
+  const [isFullScreen, setIsFullScreen] = useState(false)
 
-  const clearBoard = (dontAsk = true) => {
+  const clearBoard = (dontAsk = true, canvasId = 0) => {
     if (dontAsk) {
       swal({
         title: "Da li ste sigurni?",
@@ -25,15 +23,28 @@ const BoardAppBar = () => {
       })
         .then((willDelete) => {
           if (willDelete) {
-            mainContext.current.clearRect(0, 0, mainContext.current.canvas.width, mainContext.current.canvas.height)
+            clearingBoard(canvasId)
           }
         })
     }
     else {
-      mainContext.current.clearRect(0, 0, mainContext.current.canvas.width, mainContext.current.canvas.height)
+      clearingBoard(canvasId)
     }
 
   }
+
+  const clearingBoard = (canvasId = 0) => {
+    if (canvasId == 0)
+      mainContext.current.clearRect(0, 0, mainContext.current.canvas.width, mainContext.current.canvas.height)
+    else if (canvasId == 1)
+      backContext.current.clearRect(0, 0, backContext.current.canvas.width, backContext.current.canvas.height)
+    else {
+      mainContext.current.clearRect(0, 0, mainContext.current.canvas.width, mainContext.current.canvas.height)
+      backContext.current.clearRect(0, 0, backContext.current.canvas.width, backContext.current.canvas.height)
+    }
+  }
+
+
 
   const handleEraser = () => {
     setIsErasing(!isErasing)
@@ -41,17 +52,18 @@ const BoardAppBar = () => {
 
   const toggleFullScreen = () => {
     if (isFullScreen) {
-      fullScreen.exit()
+      closeFullscreen()
       setIsFullScreen(false)
     }
     else {
-      fullScreen.enter()
+      openFullscreen()
       setIsFullScreen(true)
     }
 
   }
 
   const loadImage = (e) => {
+    console.log('loading image')
     let file = {}
     if (e.currentTarget.files.length) {
       file = e.currentTarget.files[0]
@@ -62,10 +74,9 @@ const BoardAppBar = () => {
         backImage.src = reader.result
         backImage.onload = function () {
           const dimensions = calculateImageSize(backImage.width, backImage.height, window.innerWidth, window.innerHeight)
-          console.log(window.innerWidth, window.innerHeight)
-          console.log(dimensions)
-          clearBoard(false)
-          mainContext.current.drawImage(backImage, ...dimensions)
+          clearBoard(false, 1)
+          console.log(backContext.current)
+          backContext.current.drawImage(backImage, ...dimensions)
         }
       }
     }
@@ -73,7 +84,7 @@ const BoardAppBar = () => {
 
   return (
     <Fragment>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <Grid
             justify="space-between" // Add it here :)
@@ -164,7 +175,7 @@ const BoardAppBar = () => {
                 aria-label="clear board"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
-                onClick={clearBoard}
+                onClick={() => clearBoard(true, 2)}
                 title="Clean Board"
               >
                 <Icon>delete_outline</Icon>
